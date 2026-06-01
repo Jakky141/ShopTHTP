@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ไทยช่วยไทย พลัส จ.ตรัง</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- CSS (Styles) -->
+    <style>
+        body { font-family: 'Prompt', sans-serif; }
+        .glass-nav { background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .card-transition { transition: all 0.3s ease; }
+        .card-transition:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+    <!-- HTML Content -->
+    <header class="sticky top-0 z-40 w-full glass-nav border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-700 flex items-center justify-center text-white">
+                    <i class="fa-solid fa-shop"></i>
+                </div>
+                <h1 class="text-xl font-bold text-slate-900">ไทยช่วยไทย พลัส</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <input type="text" id="search-input" class="p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="ค้นหาชื่อร้านค้า...">
+            <select id="district-filter" class="p-3 rounded-lg border border-slate-200 outline-none">
+                <option value="">ทุกอำเภอ</option>
+                <option value="เมืองตรัง">เมืองตรัง</option>
+                <option value="กันตัง">กันตัง</option>
+                <option value="ย่านตาขาว">ย่านตาขาว</option>
+            </select>
+            <select id="category-filter" class="p-3 rounded-lg border border-slate-200 outline-none">
+                <option value="">ทุกประเภท</option>
+                <option value="อาหาร">อาหาร</option>
+                <option value="เครื่องดื่ม">เครื่องดื่ม</option>
+                <option value="บริการ">บริการ</option>
+            </select>
+        </div>
+
+        <div id="shops-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        const SUPABASE_URL = 'https://zsrsrsppvxfdavbthqkt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzcnNyc3BwdnhmZGF2YnRocWt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMTYxNjUsImV4cCI6MjA5NTg5MjE2NX0.r_-ssLFNAx-mOfbY-9Cy73m4vHRYZHrzq5HHeT6JE44';
+        
+        let shopsData = [];
+        let supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function fetchShops() {
+            const { data, error } = await supabaseClient.from('shops').select('*');
+            if (error) console.error("Database Error:", error);
+            shopsData = data || [];
+            renderShops(shopsData);
+        }
+
+        function renderShops(shops) {
+            const grid = document.getElementById('shops-grid');
+            grid.innerHTML = shops.map(shop => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col card-transition">
+                    <h4 class="font-bold text-lg text-slate-900 mb-1">${shop.name}</h4>
+                    <div class="flex gap-2 mb-3 text-xs">
+                        <span class="text-blue-700 font-medium bg-blue-50 px-2 py-1 rounded">${shop.district}</span>
+                        <span class="text-slate-500 bg-slate-100 px-2 py-1 rounded">${shop.category}</span>
+                    </div>
+                    <p class="text-sm text-slate-600 flex-grow">${shop.detail || 'ไม่มีรายละเอียดเพิ่มเติม'}</p>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', () => {
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const district = document.getElementById('district-filter').value;
+            const category = document.getElementById('category-filter').value;
+            
+            const filtered = shopsData.filter(s => 
+                s.name.toLowerCase().includes(search) &&
+                (district === '' || s.district === district) &&
+                (category === '' || s.category === category)
+            );
+            renderShops(filtered);
+        }));
+
+        fetchShops();
+    </script>
+</body>
+</html>

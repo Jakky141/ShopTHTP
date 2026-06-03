@@ -15,8 +15,9 @@
         .card-transition:hover { transform: translateY(-3px); }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen pb-20">
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-24">
 
+    <!-- ส่วนหัวของเว็บไซต์ -->
     <header class="top-0 z-40 w-full bg-gradient-to-r from-white to-blue-300 border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 h-24 flex items-center justify-between">
             <div class="flex items-center gap-4">
@@ -41,51 +42,85 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-3">
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-8 grid grid-cols-1 md:grid-cols-5 gap-3">
-            <input type="text" id="search-input" class="p-2.5 text-base rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none md:col-span-2" placeholder="ค้นหาชื่อร้าน (พิมพ์สั้นๆ)">
-            <select id="district-filter" class="p-2.5 text-sm rounded-lg border border-slate-200 outline-none">
-                <option value="">ทุกอำเภอ</option>
-                <option value="เมืองตรัง">เมืองตรัง</option>
-                <option value="กันตัง">กันตัง</option>
-                <option value="นาโยง">นาโยง</option>
-                <option value="ปะเหลียน">ปะเหลียน</option>                
-                <option value="ย่านตาขาว">ย่านตาขาว</option>
-                <option value="รัษฎา">รัษฎา</option>
-                <option value="วังวิเศษ">วังวิเศษ</option>
-                <option value="สิเกา">สิเกา</option>
-                <option value="ห้วยยอด">ห้วยยอด</option>
-                <option value="หาดสำราญ">หาดสำราญ</option>
-                <option value="ไม่ระบุ">ไม่ระบุ</option>
-            </select>
-            <select id="category-filter" class="p-2.5 text-sm rounded-lg border border-slate-200 outline-none">
-                <option value="">ทุกประเภท</option>
-                <option value="อาหาร">อาหาร</option>
-                <option value="เครื่องดื่ม">เครื่องดื่ม</option>
-                <option value="ขนม">ขนม</option>                
-                <option value="ผลไม้">ผลไม้</option>
-                <option value="คาเฟ่">คาเฟ่</option>                        
-                <option value="ร้านชำ">ร้านชำ</option>
-                <option value="บริการ">บริการ</option>
-                <option value="ที่พัก">ที่พัก</option>    
-                <option value="อื่นๆ">อื่นๆ</option>                
-            </select>
-            <div class="flex gap-2">
-                <button onclick="applyFilters()" class="flex-1 p-2.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition">
-                    <i class="fa-solid fa-magnifying-glass mr-1"></i> ค้นหา
-                </button>
-                <button onclick="resetFilters()" class="flex-1 p-2.5 text-sm bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg font-semibold transition">
-                    <i class="fa-solid fa-rotate-left mr-1"></i> รีเซ็ต
+        <!-- ตัวกรองค้นหาประเภทต่างๆ -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-4 flex flex-col gap-3 md:grid md:grid-cols-5">
+            <input type="text" id="search-input" oninput="applyFilters()" class="p-2.5 text-base rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none md:col-span-2" placeholder="ค้นหาชื่อร้าน (พิมพ์สั้นๆ)">
+            <div class="grid grid-cols-[2.2fr_2.2fr_1.6fr] gap-2 md:col-span-3">
+                <select id="district-filter" onchange="applyFilters()" class="p-2.5 text-xs sm:text-sm rounded-lg border border-slate-200 outline-none w-full">
+                    <option value="">ทุกอำเภอ</option>
+                    <option value="เมืองตรัง">เมืองตรัง</option>
+                    <option value="กันตัง">กันตัง</option>
+                    <option value="นาโยง">นาโยง</option>
+                    <option value="ปะเหลียน">ปะเหลียน</option>                
+                    <option value="ย่านตาขาว">ย่านตาขาว</option>
+                    <option value="รัษฎา">รัษฎา</option>
+                    <option value="วังวิเศษ">วังวิเศษ</option>
+                    <option value="สิเกา">สิเกา</option>
+                    <option value="ห้วยยอด">ห้วยยอด</option>
+                    <option value="หาดสำราญ">หาดสำราญ</option>
+                    <option value="ไม่ระบุ">ไม่ระบุ</option>
+                </select>
+                <select id="category-filter" onchange="applyFilters()" class="p-2.5 text-xs sm:text-sm rounded-lg border border-slate-200 outline-none w-full">
+                    <option value="">ทุกประเภท</option>
+                    <option value="อาหาร">อาหาร</option>
+                    <option value="เครื่องดื่ม">เครื่องดื่ม</option>
+                    <option value="ขนม">ขนม</option>                
+                    <option value="ผลไม้">ผลไม้</option>
+                    <option value="คาเฟ่">คาเฟ่</option>                        
+                    <option value="ร้านชำ">ร้านชำ</option>
+                    <option value="บริการ">บริการ</option>
+                    <option value="ที่พัก">ที่พัก</option>    
+                    <option value="อื่นๆ">อื่นๆ</option>                
+                </select>
+                <button onclick="resetFilters()" class="py-2 px-1 sm:p-2.5 text-[12px] sm:text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg font-semibold transition flex items-center justify-center gap-1 whitespace-nowrap">
+                    <i class="fa-solid fa-rotate-left text-[10px] sm:text-xs"></i> รีเซ็ต
                 </button>
             </div>
         </div>
 
-        <div id="loading-status" class="text-center py-10 text-slate-500 font-medium hidden">
-            <i class="fa-solid fa-spinner fa-spin mr-2"></i> กำลังโหลดข้อมูล...
+        <!-- แท็กอาหารยอดนิยม -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-6">
+            <h3 class="text-sm font-semibold mb-2.5 flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-blue-900"></i>
+                <span class="text-blue-900">อาหารยอดนิยม</span>
+            </h3>
+            <div class="flex flex-wrap gap-1.5" id="food-type-tags">
+                <button onclick="selectFoodType('ชาบู')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">ชาบู</button>
+                <button onclick="selectFoodType('หม่าล่า')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">หม่าล่า</button>
+                <button onclick="selectFoodType('หมูกระทะ')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">หมูกระทะ</button>
+                <button onclick="selectFoodType('โรตี')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">โรตี</button>
+                <button onclick="selectFoodType('ข้าวต้ม')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">ข้าวต้ม</button>
+                <button onclick="selectFoodType('หมูย่าง')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">หมูย่าง</button>
+                <button onclick="selectFoodType('เส้น')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">เส้น</button>
+                <button onclick="selectFoodType('ส้มตำ/ยำ')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">ส้มตำ/ยำ</button>
+                <button onclick="selectFoodType('ติ่มซำ')" class="food-tag px-3 py-1 text-[10px] font-medium rounded-full bg-slate-100 hover:bg-orange-100 text-slate-600 hover:text-orange-700 transition">ติ่มซำ</button>
+            </div>
         </div>
 
+        <!-- สถานะการดึงข้อมูลจาก Database -->
+        <div id="loading-status" class="text-center py-10 text-slate-500 font-medium hidden">
+            <i class="fa-solid fa-spinner fa-spin mr-2 text-blue-600 text-xl"></i> กำลังโหลดข้อมูลร้านค้า...
+        </div>
+
+        <!-- ตารางแสดงการ์ดร้านค้า -->
         <div id="shops-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+        <!-- ตัวตรวจจับการเลื่อนจอถึงท้ายสุด (Infinite Scroll Indicator) -->
+        <div id="scroll-trigger" class="w-full text-center py-8 text-slate-400 text-sm font-medium">
+            <span id="scroll-spinner" class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm">
+                <i class="fa-solid fa-circle-notch fa-spin text-blue-500"></i>
+                กำลังโหลดร้านค้าเพิ่มเติม...
+            </span>
+        </div>
+
+        <!-- กรณีไม่พบข้อมูลตัวกรอง -->
+        <div id="no-data-status" class="text-center py-12 text-slate-400 font-medium hidden flex-col items-center gap-3">
+            <i class="fa-solid fa-store-slash text-4xl text-slate-300"></i>
+            <span>ไม่พบร้านค้าที่ตรงกับเงื่อนไขการค้นหา</span>
+        </div>
     </main>
 
+    <!-- ส่วนท้ายเว็บ -->
     <footer class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 py-3 text-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-40">
         <p class="text-xs text-slate-600">พัฒนาโดย <span class="font-bold text-blue-700">Facebook : แวะกลางทาง</span></p>
     </footer>
@@ -94,9 +129,17 @@
         const SUPABASE_URL = 'https://zsrsrsppvxfdavbthqkt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzcnNyc3BwdnhmZGF2YnRocWt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzMTYxNjUsImV4cCI6MjA5NTg5MjE2NX0.r_-ssLFNAx-mOfbY-9Cy73m4vHRYZHrzq5HHeT6JE44';
         
-        let shopsData = [];
+        let shopsData = []; // เก็บร้านค้าทั้งหมดที่เรียงพยัญชนะแล้ว
+        let filteredData = []; // เก็บผลลัพธ์จากการค้นหา/ฟิลเตอร์
+        let selectedFoodType = ''; // สำหรับเก็บประเภทอาหารยอดนิยมที่เลือกอยู่
         let supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // ตัวแปรสำหรับการแบ่งหน้าแสดงผล (Pagination)
+        const ITEMS_PER_PAGE = 12; // แสดงผลหน้าละ 12 ร้านค้า
+        let currentLimit = ITEMS_PER_PAGE;
+        let intersectionObserver = null; // เก็บ Instance ของ Observer เพื่อเคลียร์ทิ้งเมื่อค้นหาใหม่
+
+        // ดึงข้อมูลร้านค้าจากฐานข้อมูล
         async function fetchShops() {
             const loadingStatus = document.getElementById('loading-status');
             loadingStatus.classList.remove('hidden');
@@ -105,50 +148,185 @@
             
             loadingStatus.classList.add('hidden');
             
-            if (error) console.error("Database Error:", error);
-            shopsData = data || [];
-            renderShops(shopsData);
+            if (error) {
+                console.error("Database Error:", error);
+                return;
+            }
+
+            const rawData = data || [];
+            
+            // เรียงลำดับตามตัวอักษรของชื่อร้านค้า (ภาษาไทย ก-ฮ และ อักษรภาษาอังกฤษ)
+            shopsData = rawData.sort((a, b) => {
+                const nameA = a.name || '';
+                const nameB = b.name || '';
+                return nameA.localeCompare(nameB, 'th', { sensitivity: 'base' });
+            });
+
+            // ค่าเริ่มต้นของผลลัพธ์คือข้อมูลทั้งหมดที่เรียงลำดับแล้ว
+            filteredData = [...shopsData];
+            
+            // แสดงผลลัพธ์ร้านค้า
+            renderShops();
+            setupInfiniteScroll();
         }
 
-        function renderShops(shops) {
+        // ฟังชันแสดงรายการร้านค้าแบบจำกัดปริมาณตามพิกัดการเลื่อน (Lazy Load)
+        function renderShops() {
             const grid = document.getElementById('shops-grid');
-            grid.innerHTML = shops.map(shop => `
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden card-transition">
-                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 px-3 py-2">
-                        <h4 class="font-bold text-blue-900 text-base truncate">${shop.name}</h4>
-                    </div>
-                    <div class="pt-1.5 pb-1.5 pl-3 pr-2.5 flex flex-col gap-2">
-                        <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">${shop.detail || '-'}</p>
-                        <div class="flex flex-wrap gap-1.5 mt-0.5">
-                            <span class="text-[10px] text-blue-700 font-medium bg-blue-50 px-2 py-0.5 rounded-full">${shop.district}</span>
-                            <span class="text-[10px] text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded-full">${shop.category}</span>
+            const spinner = document.getElementById('scroll-spinner');
+            const noDataStatus = document.getElementById('no-data-status');
+
+            // ตัดส่วนข้อมูลที่จะแสดงผลในปัจจุบัน (เช่น 0 ถึง currentLimit)
+            const currentDisplayList = filteredData.slice(0, currentLimit);
+
+            if (filteredData.length === 0) {
+                grid.innerHTML = '';
+                noDataStatus.classList.remove('hidden');
+                noDataStatus.classList.add('flex');
+                spinner.classList.add('hidden');
+                return;
+            } else {
+                noDataStatus.classList.add('hidden');
+                noDataStatus.classList.remove('flex');
+            }
+
+            // เรนเดอร์การ์ดร้านค้า
+            grid.innerHTML = currentDisplayList.map(shop => {
+                const foodTypeTag = shop['Food type'] ? `
+                    <span class="text-[10px] text-orange-700 font-medium bg-orange-50 px-2 py-0.5 rounded-full">
+                        <i class="fa-solid fa-tag text-[8px] mr-0.5"></i>${shop['Food type']}
+                    </span>
+                ` : '';
+
+                return `
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden card-transition">
+                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 px-3 py-2">
+                            <h4 class="font-bold text-blue-900 text-base truncate">${shop.name}</h4>
+                        </div>
+                        <div class="pt-1.5 pb-1.5 pl-3 pr-2.5 flex flex-col gap-2">
+                            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">${shop.detail || '-'}</p>
+                            <div class="flex flex-wrap gap-1.5 mt-0.5">
+                                <span class="text-[10px] text-blue-700 font-medium bg-blue-50 px-2 py-0.5 rounded-full">${shop.district || 'ไม่ระบุ'}</span>
+                                <span class="text-[10px] text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded-full">${shop.category || 'อื่นๆ'}</span>
+                                ${foodTypeTag}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+
+            // จัดการการแสดงผลปุ่ม/ไอคอนตัวช่วยเลื่อนโหลดด้านล่างสุด
+            if (currentLimit < filteredData.length) {
+                spinner.classList.remove('hidden');
+            } else {
+                spinner.classList.add('hidden');
+            }
         }
 
+        // จัดการเหตุการณ์เมื่อมีการเลื่อนจอมาถึงด้านล่างสุดเพื่อดึงข้อมูลเพิ่ม
+        function loadMoreShops() {
+            if (currentLimit < filteredData.length) {
+                currentLimit += ITEMS_PER_PAGE;
+                renderShops();
+            }
+        }
+
+        // ตั้งค่าระบบตรวจจับการเลื่อนจอด้วย Intersection Observer API
+        function setupInfiniteScroll() {
+            // หากเคยสร้าง Observer ไว้แล้ว ให้เคลียร์ตัวเดิมก่อนเพื่อป้องกันการซ้อนทับกันของ Event ลูป
+            if (intersectionObserver) {
+                intersectionObserver.disconnect();
+            }
+
+            const trigger = document.getElementById('scroll-trigger');
+            
+            intersectionObserver = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                // หากหน้าจอเลื่อนมาถึงจุดสังเกต และจำนวนที่แสดงยังไม่เกินจำนวนข้อมูลทั้งหมดที่มี
+                if (entry.isIntersecting && currentLimit < filteredData.length) {
+                    loadMoreShops();
+                }
+            }, {
+                rootMargin: '100px', // ทำงานล่วงหน้าก่อนเลื่อนถึงตัวหมุน 100px ช่วยให้ลื่นไหลไร้รอยต่อ
+                threshold: 0.1
+            });
+
+            intersectionObserver.observe(trigger);
+        }
+
+        // ฟังก์ชันเมื่อกดเลือกแท็กอาหารยอดนิยม
+        function selectFoodType(foodType) {
+            const tags = document.querySelectorAll('.food-tag');
+            
+            if (selectedFoodType === foodType) {
+                selectedFoodType = '';
+                tags.forEach(tag => {
+                    tag.classList.replace('bg-orange-500', 'bg-slate-100');
+                    tag.classList.replace('text-white', 'text-slate-600');
+                    tag.classList.add('hover:bg-orange-100', 'hover:text-orange-700');
+                });
+            } else {
+                selectedFoodType = foodType;
+                tags.forEach(tag => {
+                    if (tag.textContent.trim() === foodType) {
+                        tag.classList.replace('bg-slate-100', 'bg-orange-500');
+                        tag.classList.replace('text-slate-600', 'text-white');
+                        tag.classList.remove('hover:bg-orange-100', 'hover:text-orange-700');
+                    } else {
+                        tag.classList.replace('bg-orange-500', 'bg-slate-100');
+                        tag.classList.replace('text-white', 'text-slate-600');
+                        tag.classList.add('hover:bg-orange-100', 'hover:text-orange-700');
+                    }
+                });
+            }
+            
+            applyFilters();
+        }
+
+        // รีเซ็ตการตั้งค่าตัวกรองทั้งหมดกลับเป็นค่าเริ่มต้น
         function resetFilters() {
             document.getElementById('search-input').value = '';
             document.getElementById('district-filter').value = '';
             document.getElementById('category-filter').value = '';
-            renderShops(shopsData);
+            
+            selectedFoodType = '';
+            const tags = document.querySelectorAll('.food-tag');
+            tags.forEach(tag => {
+                tag.classList.replace('bg-orange-500', 'bg-slate-100');
+                tag.classList.replace('text-white', 'text-slate-600');
+                tag.classList.add('hover:bg-orange-100', 'hover:text-orange-700');
+            });
+
+            filteredData = [...shopsData]; // คืนค่าข้อมูลทั้งหมด (ซึ่งเรียงลำดับอยู่แล้ว)
+            currentLimit = ITEMS_PER_PAGE; // รีเซ็ตการโหลดแบบ Lazy Load กลับมาเริ่มต้นหน้าแรก
+            renderShops();
+            setupInfiniteScroll(); // รีเซ็ต Infinite Scroll ใหม่
         }
 
+        // ประมวลผลเมื่อผู้ใช้งานค้นหา หรือ เลือกตัวกรองต่างๆ
         function applyFilters() {
             const search = document.getElementById('search-input').value.toLowerCase();
             const district = document.getElementById('district-filter').value;
             const category = document.getElementById('category-filter').value;
             
-            const filtered = shopsData.filter(s => 
+            // คัดกรองจากชุดข้อมูลตั้งต้นที่จัดเรียงเรียบร้อยแล้ว
+            filteredData = shopsData.filter(s => 
                 (s.name || '').toLowerCase().includes(search) &&
                 (district === '' || s.district === district) &&
-                (category === '' || s.category === category)
+                (category === '' || s.category === category) &&
+                (selectedFoodType === '' || (s['Food type'] || '').trim() === selectedFoodType)
             );
-            renderShops(filtered);
+
+            // เมื่อทำการกรองข้อมูลใหม่ ให้เริ่มต้นการแสดงผลที่ชุดแรกเสมอ
+            currentLimit = ITEMS_PER_PAGE; 
+            renderShops();
+            setupInfiniteScroll(); // ผูก Intersection Observer ใหม่กับชุดข้อมูลที่ผ่านการคัดกรองแล้ว
         }
 
-        fetchShops();
+        // เริ่มโหลดข้อมูลเมื่อหน้าเว็บพร้อมทำงาน
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchShops();
+        });
     </script>
 </body>
 </html>
